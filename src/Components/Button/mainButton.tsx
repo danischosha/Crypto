@@ -4,18 +4,16 @@ interface MainButtonProps {
   title: string;
   handleOnclick: () => void;
   icon?: React.ReactNode;
-  style?: React.CSSProperties; // Add the style prop
+  style?: React.CSSProperties;
+  className?: string; // Add the className prop
 }
 
-export const MainButton = ({ title, handleOnclick, style }: MainButtonProps) => {
+export const MainButton = ({ title, handleOnclick, style, className }: MainButtonProps) => {
   return (
     <button
       onClick={handleOnclick}
-      className="mainButton"
-      style={{
-        color: "black",
-        
-      }}
+      className={`mainButton ${className}`} // Add className to the button
+  
     >
       {title}
     </button>

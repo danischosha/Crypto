@@ -3,7 +3,6 @@ import { MainButton } from "../Button/mainButton";
 import { CoinCard } from "../Coins/CoinsCard"
 import InputText from "../Input/inputText";
 import "./CoinsPage.css";
-import { LoadingPopup } from "../LoadingPopup/LoadingPopup";
 import ListPopup from "../ListPopup/ListPopup";
 import ReportsPage from "../Reports/ReportPage";
 import SavedSearchIcon from "@mui/icons-material/SavedSearch"; // Add this line to import the SavedSearchIcon
@@ -43,9 +42,15 @@ export const CoinsPage = () => {
   const [filteredCoinsData, setFilteredCoinsData] = useState<Coin[]>([]);
   const [searchInput, setSearchInput] = useState<string>('');
 
-  const [loading, setLoading] = useState<boolean>(false); // Add the loading state
   const [cachedData, setCachedData] = useState<any | null>(null);
   const [selectedPopupCoin, setSelectedPopupCoin] = useState<Coin | null>(null);
+
+  const [loading, setLoading] = useState(false);
+  const [showDisplayAllButton, setShowDisplayAllButton] = useState(false);
+
+
+
+
 
 
 
@@ -124,12 +129,13 @@ export const CoinsPage = () => {
 
 
   const handleMoreInfoClick = async (id: string) => {
+    setLoading(true);
     if (id === selectedCoinId) {
-      // If the same coin is clicked again, close the information
       setSelectedCoinId(null);
       setSelectedCoinPrice(null);
     } else {
       try {
+        setLoading(false);
         const currentTime = Date.now();
         const cacheKey = `coin-${id}`;
         const cachedData = JSON.parse(localStorage.getItem(cacheKey) || 'null');
@@ -138,6 +144,7 @@ export const CoinsPage = () => {
           // If the cached data is available and not older than 2 minutes
           setSelectedCoinPrice(cachedData.data);
           setSelectedCoinId(id);
+          setLoading(false);
         } else {
           const coinPriceData = await fetchCoinData(id); // Await for the fetched data
           setCachedData({
@@ -147,9 +154,12 @@ export const CoinsPage = () => {
           setSelectedCoinPrice(coinPriceData);
           setSelectedCoinId(id);
           localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data: coinPriceData })); // Save the fetched data in local cache
+          setLoading(false);
         }
       } catch (error) {
         console.error("שגיאה:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -157,6 +167,10 @@ export const CoinsPage = () => {
     const selectedCoin = coinsData.find((coin) => coin.id === id);
     setSelectedPopupCoin(selectedCoin || null);
   };
+
+
+
+
 
   const fetchCoinData = async (id: string) => {
     setLoading(true);
@@ -270,8 +284,14 @@ export const CoinsPage = () => {
       coin.symbol.toLowerCase().includes(searchInput.toLowerCase())
     );
     setFilteredCoinsData(filteredCoins);
+    setShowDisplayAllButton(true); // Show the "Display All" button when user clicks "Search"
   };
 
+  const handleAllButtonClick = () => {
+    setSearchInput('');
+    setFilteredCoinsData(coinsData);
+    setShowDisplayAllButton(false); // Hide the "Display All" button when user clicks it
+  };
 
   const onReplaceClick = () => {
     setShowReplaceText(true);
@@ -312,12 +332,7 @@ export const CoinsPage = () => {
     setSearchInput(e.target.value);
   };
 
-  const handleAllButtonClick = () => {
-    setSearchInput('')
-    setFilteredCoinsData(coinsData);
-  };
-
-
+ 
 
 
   const handleClosePopup = () => {
@@ -338,36 +353,34 @@ export const CoinsPage = () => {
           value={searchInput}
           onChange={handleSearchInputChange}
         />
-        <MainButton title="Search" handleOnclick={handleSearch} style={{
-          width: "200px", // Increase the width to 200 pixels
-          height: "400px",
-        }} />
-        <MainButton title="Display All" handleOnclick={handleAllButtonClick} />
+        <MainButton title="Search" handleOnclick={handleSearch} className="searchButton" />
+        {showDisplayAllButton && (
+          <MainButton title="Display All" handleOnclick={handleAllButtonClick} className="displayAllButton" />
+        )}
+
       </div>
 
       <div className="coins-container">
         {filteredCoinsData.map((coin: Coin) => (
           // Show the LoadingPopup or the CoinCard based on the loading state
-          loading ? (
-            <LoadingPopup key={coin.symbol} />
-          ) : (
-            <CoinCard
-              key={coin.symbol}
-              coin={coin}
-              selectedCoinId={selectedCoinId}
-              selectedCoinPrice={selectedCoinPrice}
-              handleMoreInfoClick={() => handleMoreInfoClick(coin.id)}
-              toggleFavoriteCoin={toggleFavoriteCoin}
-              convertCurrency={convertCurrency}
-              isCoinFavorite={isCoinFavorite}
-              onAddCoinClick={() => handleAddReplaceClick(coin.id)}
-              showReplaceText={selectedSixthCoin !== null && showReplaceText}
-              onReplaceClick={onReplaceClick}
-              selectedSixthCoin={selectedSixthCoin}
-              onSelectSixthCoin={handleSelectSixthCoin}
-              loading={loading}
-            />
-          )
+
+
+          <CoinCard
+            key={coin.symbol}
+            coin={coin}
+            selectedCoinId={selectedCoinId}
+            selectedCoinPrice={selectedCoinPrice}
+            handleMoreInfoClick={() => handleMoreInfoClick(coin.id)}
+            toggleFavoriteCoin={toggleFavoriteCoin}
+            convertCurrency={convertCurrency}
+            isCoinFavorite={isCoinFavorite}
+            onAddCoinClick={() => handleAddReplaceClick(coin.id)}
+            showReplaceText={selectedSixthCoin !== null && showReplaceText}
+            onReplaceClick={onReplaceClick}
+            selectedSixthCoin={selectedSixthCoin}
+            onSelectSixthCoin={handleSelectSixthCoin}
+          />
+
         ))}
       </div>
 

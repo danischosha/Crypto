@@ -156,3 +156,22 @@
   align-items: center;
   /* Center horizontally */
 }
+
+.searchButton {
+  background-color: blue;
+  color: white;
+  /* Add width and height to increase the button size */
+  width: 120px;
+  height: 40px;
+  /* Add any other styles you want */
+}
+
+/* Style for the "Display All" button */
+.displayAllButton {
+  background-color: green;
+  color: white;
+  /* Add width and height to increase the button size */
+  width: 120px;
+  height: 40px;
+  /* Add any other styles you want */
+}
