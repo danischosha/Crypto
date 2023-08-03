@@ -1,0 +1,71 @@
+
+/* Styling for the main container */
+#aboutBox {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Styling for the profile picture */
+  #mePicture {
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Styling for the name */
+  #section-one p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* Styling for the article section */
+  .aboutMeArticle {
+    margin-top: 20px;
+  }
+  
+  /* Styling for the list of skills */
+  .aboutMeArticle ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .aboutMeArticle li {
+    margin-bottom: 5px;
+  }
+  
+  /* Styling for social media icons */
+  .social-network {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .social-network li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  .social-circle a {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    background: #333;
+  }
+  
+  .social-circle a:hover {
+    background: #666;
+  }
+  
+  /* Styling for the footer */
+  .aboutMeArticle p:last-child {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #777;
+  }
+  

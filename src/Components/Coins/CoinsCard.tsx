@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { MainButton } from "../Button/mainButton";
 import { Coin } from "./CoinsPage";
+import { LoadingPopup } from "../LoadingPopup/LoadingPopup";
 
 interface CoinCardProps {
   coin: Coin;
@@ -15,6 +16,8 @@ interface CoinCardProps {
   onReplaceClick: () => void;
   selectedSixthCoin: Coin | null;
   onSelectSixthCoin: (coin: Coin) => void;
+  loading: boolean; 
+
 }
 
 export const CoinCard: React.FC<CoinCardProps> = (props) => {
@@ -25,46 +28,62 @@ export const CoinCard: React.FC<CoinCardProps> = (props) => {
     handleMoreInfoClick,
     toggleFavoriteCoin,
     convertCurrency,
-    isCoinFavorite,
     onAddCoinClick,
     showReplaceText,
     onReplaceClick,
     selectedSixthCoin,
-    onSelectSixthCoin,
+    loading,
+
   } = props;
 
   const isSixthCoin = selectedSixthCoin !== null && selectedSixthCoin.id === coin.id;
+  const isShowingMoreInfo = coin.id === selectedCoinId && selectedCoinPrice;
 
-  const handleSelectSixthCoin = () => {
-    onSelectSixthCoin(coin);
-  };
+  
+
+  
 
   return (
     <div className="coin-card">
-      <img src={coin.imageUrl} alt={coin.name} className="coin-image" />
-      <p>{coin.symbol}</p>
-      <p>{coin.name}</p>
-
-      {coin.id === selectedCoinId && selectedCoinPrice && (
-        <>
-          <p>USD: {selectedCoinPrice.USD} $</p>
-          <p>EUR: {convertCurrency(selectedCoinPrice.USD, "EURO")} €</p>
-          <p>ILS: {convertCurrency(selectedCoinPrice.USD, "ILS")} ₪</p>
-          <MainButton handleOnclick={() => handleMoreInfoClick(coin.id)} title="Close" />
-        </>
-      )}
-
-      {coin.id !== selectedCoinId && (
-        <MainButton handleOnclick={() => handleMoreInfoClick(coin.id)} title="More Info" />
-      )}
-
-      {coin.favorite ? (
-        <MainButton handleOnclick={() => toggleFavoriteCoin(coin.id)} title="Remove Coin" />
+      {loading && selectedCoinId === coin.id ? (
+        <LoadingPopup />
       ) : (
-        <MainButton
-          handleOnclick={() => (isSixthCoin ? onReplaceClick() : onAddCoinClick(coin.id))}
-          title={isSixthCoin && showReplaceText ? "Replace" : "Add Coin"} 
-        />
+        <>
+          {loading ? (
+            <LoadingPopup />
+          ) : (
+            <>
+          <img src={coin.imageUrl} alt={coin.name} className="coin-image" />
+              <p>{coin.symbol}</p>
+              <p>{coin.name}</p>
+              {isShowingMoreInfo && selectedCoinPrice ? (
+                <>
+                  <p>USD: {selectedCoinPrice.USD} $</p>
+                  <p>EUR: {convertCurrency(selectedCoinPrice.USD, "EURO")} €</p>
+                  <p>ILS: {convertCurrency(selectedCoinPrice.USD, "ILS")} ₪</p>
+                  <MainButton handleOnclick={() => handleMoreInfoClick(coin.id)} title="Close" />
+                </>
+              ) : (
+                <>
+                  {selectedCoinId === coin.id && (
+                    <div className="coin-loading-indicator">Loading...</div>
+                  )}
+                  {!isShowingMoreInfo && (
+                    <MainButton handleOnclick={() => handleMoreInfoClick(coin.id)} title="More Info" />
+                  )}
+                  {coin.favorite ? (
+                    <MainButton handleOnclick={() => toggleFavoriteCoin(coin.id)} title="Remove Coin" />
+                  ) : (
+                    <MainButton
+                      handleOnclick={() => (isSixthCoin ? onReplaceClick() : onAddCoinClick(coin.id))}
+                      title={isSixthCoin && showReplaceText ? "Replace" : "Add Coin"}
+                    />
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </>
       )}
     </div>
   );

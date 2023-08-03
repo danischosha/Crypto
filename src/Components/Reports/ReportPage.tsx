@@ -1,3 +1,14 @@
-export const ReportsPage = () => {
-    return <h1>Reports Page</h1>
-}
+import React, { useEffect, useState } from 'react';
+import { Coin } from '../Coins/CoinsPage';
+
+
+const ReportsPage = () => {
+
+
+  return (
+    <div>
+    </div>
+  );
+};
+
+export default ReportsPage;

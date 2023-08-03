@@ -1,45 +1,54 @@
-* {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  }
-  .navContainer {
-    height: 120px;
-    /* border-bottom: 2px solid #dde6ed; */
-    color: #dde6ed;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    overflow: hidden;
-    background-color: gray;
-  }
-  
- 
-  .navButtons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* CSS עיצוב עבור גיימינג */
+body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: #cfd5db60;
+}
 
-  }
-  
-  .navButtons h4 {
-    margin-right: 10px; 
-  }
+.navContainer {
+  height: 120px;
+  color: #1681d3;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: hidden;
+  background-color: #20222b; /* רקע כחול אפור */
+}
+
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navButtons h4 {
+  margin-right: 10px;
+  color: white; /* כותרת זהב */
+  text-shadow: 2px 2px 5px rgba(241, 207, 11, 0.8); /* טקסט כסף */
+  cursor: pointer; /* תציגי סמן יד לעובר העכבר */
+}
+
+.navButtons h4:hover {
+  color: rgb(194, 194, 9); /* שינוי הצבע לצהוב בעת העברת העכבר */
+}
 
 
 
-  .stealogo {
-    width: 100px;
-    border-radius: 50px;
-    margin-top: 20px;
-  }
-  
-  span {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .logoHeader {
-    font-size: 3rem;
-    color: gold;
-  }
-  
+
+.stealogo {
+  width: 100px;
+  border-radius: 50px;
+  margin-top: 20px;
+}
+
+span {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #cfd5db; /* טקסט כסף */
+}
+
+.logoHeader {
+  font-size: 3rem;
+  color: white; /* כותרת זהב */
+  text-shadow: 2px 2px 5px rgba(241, 207, 11, 0.8); /* הזזה של הטקסט וזוהרת */
+}

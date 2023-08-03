@@ -1,20 +1,27 @@
 import React from "react";
-import { TextField } from '@mui/material'
-import './inputText.css'
+import './inputText.css';
 
-
-
-
-interface InputTextProps{
-    type: string;
-    placeholder: string;
-    handleOnChange: (value: string) => void;
+export interface InputTextProps {
+  type: string;
+  placeholder: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputText = ({ type, placeholder, handleOnChange }: InputTextProps) => {
-    return <TextField onChange={
-        (e: React.ChangeEvent<HTMLInputElement>) => handleOnChange(e.target.value)}
-        className='inputText' type={type}
-  
-        placeholder={placeholder} />
-}
+const InputText: React.FC<InputTextProps> = ({ type, placeholder, value, onChange }) => {
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      style={{
+        color: "black",
+        width: "200px", // Increase the width to 200 pixels
+        height: "40px", // Increase the height to 40 pixels
+      }}
+    />
+  );
+};
+
+export default InputText;

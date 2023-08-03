@@ -1,12 +1,11 @@
-.inputText{
-    background-color: transparent;
+/* inputText.css */
+.inputText {
+    background-color: red; /* Set the background color to red */
     border: none;
     outline: none;
     border-bottom: 2px solid #e9d8d8;
     color: #1c88db;
     margin: 10px 10px;
     font-size: 18px;
-    background-color: #dde6ed; 
-
-}
-
+  }
+  
